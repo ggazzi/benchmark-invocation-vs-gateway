@@ -2,14 +2,26 @@ import {
   APIGatewayProxyEvent,
   APIGatewayProxyResult,
 } from "aws-lambda/trigger/api-gateway-proxy";
+import {
+  LambdaClient, InvokeCommand
+} from "@aws-sdk/client-lambda";
 
 import benny from 'benny';
 
 // Read environment variables
 const API_GATEWAY_URL = process.env.API_GATEWAY_URL as string;
 
+const LAMBDA_CLIENT = new LambdaClient({});
+const LAMBDA_COMMAND = new InvokeCommand({
+  FunctionName: process.env.LAMBDA_FUNCTION_NAME as string,
+  Payload: JSON.stringify({}),
+})
+
 async function invokeCallee(): Promise<void> {
-  return await new Promise((resolve) => setTimeout(resolve, 200));
+  const response = await LAMBDA_CLIENT.send(LAMBDA_COMMAND);
+  if (response.StatusCode !== 200) {
+    throw new Error(`Unexpected status code ${response.StatusCode}`);
+  }
 }
 
 async function requestCallee(): Promise<void> {
@@ -69,3 +81,6 @@ export const lambdaHandler = async (
     body: JSON.stringify(result),
   };
 }
+
+runSuite().then(console.log)
+

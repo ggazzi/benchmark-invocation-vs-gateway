@@ -60,6 +60,7 @@ If you need to deploy it to your AWS account, can check the [`bun-lambda` docume
   - Set the timeout to 2min 30s
   - Set the following environment variables
     - `API_GATEWAY_URL`: the Invoke URL for GET `/test`
+    - `LAMBDA_FUNCTION_NAME`: the name of the callee Lambda
 
 2. Deploy the code
   - Run `npm run build && script/zip_lambda_with_modules callee`
