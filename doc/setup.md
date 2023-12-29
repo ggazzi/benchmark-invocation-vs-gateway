@@ -54,3 +54,17 @@ If you need to deploy it to your AWS account, can check the [`bun-lambda` docume
   - You should see the plain text "Hello from Lambda!"
 
 ### Set up the `caller` Lambda
+
+1. Create and configure a new Lambda function
+  - Follow the instructions from the callee Lambda
+  - Set the timeout to 2min 30s
+  - Set the following environment variables
+    - `API_GATEWAY_URL`: the Invoke URL for GET `/test`
+
+2. Deploy the code
+  - Run `make caller`
+  - Upload `dist/caller.zip` for the created Lambda
+
+3. Run the lambda to obtain results
+  - Invoke it with an empty JSON object as payload (`{}`)
+  - It should execute successfully and return an object describing the results of the experiment.
