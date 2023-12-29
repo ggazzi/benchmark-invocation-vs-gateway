@@ -62,10 +62,28 @@ If you need to deploy it to your AWS account, can check the [`bun-lambda` docume
     - `API_GATEWAY_URL`: the Invoke URL for GET `/test`
     - `LAMBDA_FUNCTION_NAME`: the name of the callee Lambda
 
-2. Deploy the code
+2. Give the Lambda permission to invoke the callee
+  - Go to the IAM web console, then its "Roles" section
+  - Find the role for the caller lambda (it will include its function name)
+  - Add a new inline policy with the following contents:
+
+  ```json
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": "lambda:InvokeFunction",
+        "Resource": "arn:aws:lambda:*:<your-account-id>:function:<callee-lambda-name>"
+      }
+    ]
+  }
+  ```
+
+3. Deploy the code
   - Run `npm run build && script/zip_lambda_with_modules callee`
   - Upload `dist/callee.zip` for the created Lambda
 
-3. Run the lambda to obtain results
+4. Run the lambda to obtain results
   - Invoke it with any payload
   - It should execute successfully and return an object describing the results of the experiment.
