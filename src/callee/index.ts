@@ -1,13 +1,20 @@
-export default {
-  async fetch(_request: Request): Promise<Response> {
-    // Wait 200ms before responding
-    await new Promise((resolve) => setTimeout(resolve, 200));
+import {
+  APIGatewayProxyEvent,
+  APIGatewayProxyResult,
+} from "aws-lambda/trigger/api-gateway-proxy";
 
-    return new Response("Hello from Lambda!", {
-      status: 200,
-      headers: {
-        "Content-Type": "text/plain",
-      },
-    });
-  }
+export const lambdaHandler = async (
+  _event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  // Wait 200ms before responding
+  await new Promise((resolve) => setTimeout(resolve, 200));
+
+  return {
+    statusCode: 200,
+    headers: {
+      "Content-Type": "text/plain",
+    },
+    body: "Hello from Lambda!",
+  };
 }
+

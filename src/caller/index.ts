@@ -1,6 +1,12 @@
+import {
+  APIGatewayProxyEvent,
+  APIGatewayProxyResult,
+} from "aws-lambda/trigger/api-gateway-proxy";
+
 import benny from 'benny';
 
-const API_GATEWAY_URL = Bun.env.API_GATEWAY_URL as string;
+// Read environment variables
+const API_GATEWAY_URL = process.env.API_GATEWAY_URL as string;
 
 async function invokeCallee(): Promise<void> {
   return await new Promise((resolve) => setTimeout(resolve, 200));
@@ -50,12 +56,16 @@ async function runSuite(): Promise<object> {
   })
 }
 
-export default {
-  async run(_request: Request): Promise<Response> {
-    const result = { variations: await runSuite() };
-    return new Response(JSON.stringify(result), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    })
-  }
+export const lambdaHandler = async (
+  _event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  const result = { variations: await runSuite() };
+
+  return {
+    statusCode: 200,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(result),
+  };
 }

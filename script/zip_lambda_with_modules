@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+##
+# creates a zip archive of a lambda folder in `.dist` which will also contain the common node_modules
+##
+
+set -e
+
+DIST_DIR="dist"
+
+install_modules() {
+  local lambda_dir="$1"
+  cp package*.json "$lambda_dir"
+  (
+    cd "$lambda_dir"
+    npm ci --omit=dev
+  )
+}
+
+zip_lambda() {
+  local lambda_dir="$1"
+
+  install_modules "$DIST_DIR/$lambda_dir"
+
+  (
+    cd "$DIST_DIR/$lambda_dir"
+    zip -r "../$lambda_dir.zip" .
+  )
+}
+
+zip_lambda "$1"

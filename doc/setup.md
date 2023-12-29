@@ -13,20 +13,20 @@ If you need to deploy it to your AWS account, can check the [`bun-lambda` docume
 ### Set up the callee Lambda 
 
 1. Create and configure a new Lambda function 
-    - Set the Runtime to custom with Amazon Linux
-    - Set the handler to `handler.fetch`
-    - Set the architecture to whichever architecture you configured when you built/deployed the Lambda Layer for bun.
-    - Attach the Lambda Layer to the function
+  - Set the Runtime to custom with Amazon Linux
+  - Set the handler to `handler.fetch`
+  - Set the architecture to whichever architecture you configured when you built/deployed the Lambda Layer for bun.
+  - Attach the Lambda Layer to the function
 
 2. Deploy the code
-    - Run `make callee`
-    - Upload `dist/callee.zip` for the created Lambda
+  - Run `npm run build && script/zip_lambda_with_modules callee`
+  - Upload `dist/callee.zip` for the created Lambda
 
 3. Test the lambda
-    - Invoke it with an empty JSON object as payload (`{}`)
-    - It should execute successfully and result in "Hello from Lambda!"
-    - Invoke it again, since it's warmed up
-    - It should execute successfully with a duration around 200ms
+  - Invoke it with any payload
+  - It should execute successfully and result in "Hello from Lambda!"
+  - Invoke it again, since it's warmed up
+  - It should execute successfully with a duration around 200ms
 
 ### Set up the API Gateway
 
@@ -62,9 +62,9 @@ If you need to deploy it to your AWS account, can check the [`bun-lambda` docume
     - `API_GATEWAY_URL`: the Invoke URL for GET `/test`
 
 2. Deploy the code
-  - Run `make caller`
-  - Upload `dist/caller.zip` for the created Lambda
+  - Run `npm run build && script/zip_lambda_with_modules callee`
+  - Upload `dist/callee.zip` for the created Lambda
 
 3. Run the lambda to obtain results
-  - Invoke it with an empty JSON object as payload (`{}`)
+  - Invoke it with any payload
   - It should execute successfully and return an object describing the results of the experiment.

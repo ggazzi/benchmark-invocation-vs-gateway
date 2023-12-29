@@ -12,7 +12,8 @@
     {
       devShell = pkgs.mkShell {
         buildInputs = with pkgs; [
-          bun
+          nodejs_20
+          typescript
         ];
       };
     }
