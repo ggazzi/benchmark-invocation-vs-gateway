@@ -6,17 +6,12 @@ This assumes you have full access to an AWS account where you can run this bench
 
 Instructions are based on the AWS Web Console, but the same could be achieved with the CLI.
 
-### Ensure you have an appropriate `bun` layer for Lambdas
-
-If you need to deploy it to your AWS account, can check the [`bun-lambda` documentation](https://github.com/oven-sh/bun/blob/main/packages/bun-lambda/README.md#setup) for instructions.
 
 ### Set up the callee Lambda 
 
 1. Create and configure a new Lambda function 
-    - Set the Runtime to custom with Amazon Linux
-    - Set the handler to `handler.fetch`
-    - Set the architecture to whichever architecture you configured when you built/deployed the Lambda Layer for bun.
-    - Attach the Lambda Layer to the function
+    - Set the Runtime to Node.js 20.x
+    - Set the handler to `index.lambdaHandler`
 
 2. Deploy the code
     - Run `npm run build && script/zip_lambda_with_modules callee`
