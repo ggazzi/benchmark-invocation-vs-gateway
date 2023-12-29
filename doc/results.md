@@ -1,6 +1,6 @@
 After running the experiment as described in the [setup document](./setup.md), the following results were obtained:
 
-```json
+```js
 [
   {
     name: 'Invocation',
@@ -19,7 +19,7 @@ After running the experiment as described in the [setup document](./setup.md), t
              230.2161515,         239.121534,
              239.4474825, 241.27597500000002,
       241.35043249999998,        262.3149245,
-270.6565495
+      270.6565495
     ]
   },
   {
@@ -39,7 +39,7 @@ After running the experiment as described in the [setup document](./setup.md), t
              225.1483565,        227.9610255,
               232.743257,        238.4591465,
               257.350067, 316.25102350000003,
-399.356922
+              399.356922
     ]
   }
 ]
